@@ -1,0 +1,73 @@
+---
+title: "eds223 test map"
+author: "Marie Rivers"
+date: "9/29/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(RColorBrewer)
+library(rgeos)
+library(sp)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(sf)
+library(spData)
+# library(spDataLarge) # package ‘spDataLarge’ is not available for this version of R
+library(tidyverse)
+library(tmap)
+```
+
+Messages when loading library(rgeos):
+Loading required package: sp
+rgeos version: 0.5-8, (SVN revision 679)
+ GEOS runtime version: 3.8.1-CAPI-1.13.3 
+ Please note that rgeos will be retired by the end of 2023,
+plan transition to sf functions using GEOS at your earliest convenience.
+ Linking to sp version: 1.4-5 
+ Polygon checking: TRUE
+
+Message when trying to install package spDataLarge:
+Warning in install.packages :
+  package ‘spDataLarge’ is not available for this version of R
+
+A version of this package for your version of R might be available elsewhere,
+see the ideas at
+https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages
+
+# Natural Earth Data
+```{r}
+sp::plot(ne_countries())
+```
+```{r}
+# uk
+plot(ne_countries(country = "united kingdom"))
+```
+```{r}
+tm_shape(lnd) +
+  tm_fill() +
+  tm_borders()
+```
+```{r}
+map_london = tm_shape(lnd) + tm_polygons()
+map_london
+```
+```{r}
+if (requireNamespace("rgdal", quietly = TRUE)) {
+library(rgdal)
+columbus <- readOGR(system.file("shapes/columbus.shp", package="spData")[1])
+plot(columbus)
+}
+if (requireNamespace("spdep", quietly = TRUE)) {
+library(spdep)
+col.gal.nb <- read.gal(system.file("weights/columbus.gal", package="spData")[1])
+}
+```
+```{r}
+
+```
+
